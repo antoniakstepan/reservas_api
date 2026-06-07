@@ -1,5 +1,7 @@
 generator client {
-  provider = "prisma-client-js"
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
@@ -72,37 +74,40 @@ model User {
   ownedCompanies Company[]       @relation("CompanyOwner")
   memberships    CompanyMember[]
   workerProfiles WorkerProfile[]
-  clientProfile   ClientProfile?
-  bookings        Booking[]       @relation("ClientBookings")
+  clientProfile  ClientProfile?
+  bookings       Booking[]       @relation("ClientBookings")
+  CompanyClient  CompanyClient[]
 }
 
 model Company {
-  id               String           @id @default(uuid())
-  ownerId          String
-  name             String
-  slug             String           @unique
-  description      String?
-  phone            String?
-  email            String?
-  website          String?
-  logoUrl          String?
-  coverImageUrl    String?
-  organizationType OrganizationType
-  address          String?
-  city             String?
-  country          String?
-  isActive         Boolean          @default(true)
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
+  id                       String           @id @default(uuid())
+  ownerId                  String
+  name                     String
+  slug                     String           @unique
+  description              String?
+  phone                    String?
+  email                    String?
+  website                  String?
+  logoUrl                  String?
+  coverImageUrl            String?
+  organizationType         OrganizationType
+  address                  String?
+  city                     String?
+  country                  String?
+  isActive                 Boolean          @default(true)
+  createdAt                DateTime         @default(now())
+  updatedAt                DateTime         @updatedAt
+  minBookingAdvanceMinutes Int              @default(60)
 
-  owner        User                 @relation("CompanyOwner", fields: [ownerId], references: [id])
-  certificates CompanyCertificate[]
-  subscription Subscription?
-  members      CompanyMember[]
-  services     Service[]
-  workers      WorkerProfile[]
-  bookings     Booking[]
-  reports      WorkerReport[]
+  owner         User                 @relation("CompanyOwner", fields: [ownerId], references: [id])
+  certificates  CompanyCertificate[]
+  subscription  Subscription?
+  members       CompanyMember[]
+  services      Service[]
+  workers       WorkerProfile[]
+  bookings      Booking[]
+  reports       WorkerReport[]
+  CompanyClient CompanyClient[]
 }
 
 model CompanyCertificate {
@@ -119,15 +124,15 @@ model CompanyCertificate {
 }
 
 model Subscription {
-  id        String             @id @default(uuid())
-  companyId String            @unique
-  plan      SubscriptionPlan   @default(BASIC)
-  status    SubscriptionStatus @default(TRIAL)
-  maxWorkers Int              @default(5)
-  startedAt DateTime           @default(now())
-  expiresAt DateTime?
-  createdAt DateTime           @default(now())
-  updatedAt DateTime           @updatedAt
+  id         String             @id @default(uuid())
+  companyId  String             @unique
+  plan       SubscriptionPlan   @default(BASIC)
+  status     SubscriptionStatus @default(TRIAL)
+  maxWorkers Int                @default(5)
+  startedAt  DateTime           @default(now())
+  expiresAt  DateTime?
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
 
   company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 }
@@ -163,13 +168,13 @@ model WorkerProfile {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
-  user          User                 @relation(fields: [userId], references: [id])
-  company       Company              @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  services      WorkerService[]
-  availability  WorkerAvailability[]
-  timeOffs      WorkerTimeOff[]
-  bookings      Booking[]
-  reports       WorkerReport[]
+  user         User                 @relation(fields: [userId], references: [id])
+  company      Company              @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  services     WorkerService[]
+  availability WorkerAvailability[]
+  timeOffs     WorkerTimeOff[]
+  bookings     Booking[]
+  reports      WorkerReport[]
 
   @@unique([userId, companyId])
 }
@@ -186,8 +191,8 @@ model Service {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
-  company Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  workers WorkerService[]
+  company  Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  workers  WorkerService[]
   bookings Booking[]
 }
 
@@ -226,34 +231,62 @@ model WorkerTimeOff {
 }
 
 model ClientProfile {
-  id          String   @id @default(uuid())
-  userId      String   @unique
+  id          String    @id @default(uuid())
+  userId      String    @unique
   dateOfBirth DateTime?
   notes       String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   user User @relation(fields: [userId], references: [id])
 }
 
 model Booking {
-  id              String        @id @default(uuid())
+  id              String  @id @default(uuid())
   companyId       String
-  clientId        String
+  clientId        String?
+  companyClientId String?
+
   workerProfileId String
   serviceId       String
   startDateTime   DateTime
   endDateTime     DateTime
-  status          BookingStatus @default(PENDING)
-  clientNote      String?
-  cancelReason    String?
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
 
-  company       Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  client        User          @relation("ClientBookings", fields: [clientId], references: [id])
-  workerProfile WorkerProfile @relation(fields: [workerProfileId], references: [id])
-  service       Service       @relation(fields: [serviceId], references: [id])
+  status       BookingStatus @default(PENDING)
+  clientNote   String?
+  cancelReason String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company       Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  client        User?          @relation("ClientBookings", fields: [clientId], references: [id])
+  companyClient CompanyClient? @relation(fields: [companyClientId], references: [id])
+  workerProfile WorkerProfile  @relation(fields: [workerProfileId], references: [id])
+  service       Service        @relation(fields: [serviceId], references: [id])
+}
+
+model CompanyClient {
+  id        String @id @default(uuid())
+  companyId String
+
+  firstName  String
+  lastName   String?
+  middleName String?
+  phone      String?
+  email      String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company  Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  bookings Booking[]
+  User     User?     @relation(fields: [userId], references: [id])
+  userId   String?
+
+  @@index([companyId])
+  @@index([phone])
+  @@index([email])
 }
 
 model WorkerReport {

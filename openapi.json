@@ -1,0 +1,924 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["App"]
+      }
+    },
+    "/api/auth/register/client": {
+      "post": {
+        "operationId": "AuthController_registerClient",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterClientDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["Auth"]
+      }
+    },
+    "/api/auth/register/company": {
+      "post": {
+        "operationId": "AuthController_registerCompany",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterCompanyDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["Auth"]
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["Auth"]
+      }
+    },
+    "/api/users/me": {
+      "get": {
+        "operationId": "UsersController_getMe",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Users"]
+      }
+    },
+    "/api/companies/me": {
+      "get": {
+        "operationId": "CompaniesController_getMyCompany",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Companies"]
+      },
+      "patch": {
+        "operationId": "CompaniesController_updateMyCompany",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCompanyDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Companies"]
+      }
+    },
+    "/api/services": {
+      "post": {
+        "operationId": "ServicesController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateServiceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["Services"]
+      },
+      "get": {
+        "operationId": "ServicesController_findMyCompanyServices",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Services"]
+      }
+    },
+    "/api/services/{id}": {
+      "patch": {
+        "operationId": "ServicesController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateServiceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Services"]
+      },
+      "delete": {
+        "operationId": "ServicesController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Services"]
+      }
+    },
+    "/api/workers/invite": {
+      "post": {
+        "operationId": "WorkersController_inviteWorker",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteWorkerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["Workers"]
+      }
+    },
+    "/api/workers/accept-invite": {
+      "post": {
+        "operationId": "WorkersController_acceptInvite",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptWorkerInviteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["Workers"]
+      }
+    },
+    "/api/availability": {
+      "post": {
+        "operationId": "AvailabilityController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAvailabilityDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["Availability"]
+      }
+    },
+    "/api/availability/worker/{workerProfileId}": {
+      "get": {
+        "operationId": "AvailabilityController_findByWorker",
+        "parameters": [
+          {
+            "name": "workerProfileId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Availability"]
+      }
+    },
+    "/api/availability/{id}": {
+      "delete": {
+        "operationId": "AvailabilityController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Availability"]
+      }
+    },
+    "/api/bookings": {
+      "post": {
+        "operationId": "BookingsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBookingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["Bookings"]
+      },
+      "get": {
+        "operationId": "BookingsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Bookings"]
+      }
+    },
+    "/api/bookings/{id}": {
+      "get": {
+        "operationId": "BookingsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Bookings"]
+      },
+      "patch": {
+        "operationId": "BookingsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBookingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Bookings"]
+      },
+      "delete": {
+        "operationId": "BookingsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Bookings"]
+      }
+    },
+    "/api/bookings/{id}/approve": {
+      "patch": {
+        "operationId": "BookingsController_approve",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Bookings"]
+      }
+    },
+    "/api/bookings/{id}/decline": {
+      "patch": {
+        "operationId": "BookingsController_decline",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Bookings"]
+      }
+    },
+    "/api/company-clients": {
+      "post": {
+        "operationId": "CompanyClientsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCompanyClientDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": ["CompanyClients"]
+      },
+      "get": {
+        "operationId": "CompanyClientsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["CompanyClients"]
+      }
+    }
+  },
+  "info": {
+    "title": "Booking SaaS API",
+    "description": "Booking SaaS backend API",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "RegisterClientDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "client@example.com"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8,
+            "example": "password123"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+380501234567"
+          }
+        },
+        "required": ["email", "password", "firstName", "lastName"]
+      },
+      "OrganizationType": {
+        "type": "string",
+        "enum": [
+          "BEAUTY",
+          "DENTAL",
+          "MEDICAL",
+          "AUTO_SERVICE",
+          "BARBERSHOP",
+          "SPA",
+          "OTHER"
+        ]
+      },
+      "RegisterCompanyDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "owner@company.com"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8,
+            "example": "password123"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+380501234567"
+          },
+          "companyName": {
+            "type": "string",
+            "example": "Beauty Studio"
+          },
+          "organizationType": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OrganizationType"
+              }
+            ]
+          },
+          "city": {
+            "type": "string",
+            "example": "Kyiv"
+          },
+          "country": {
+            "type": "string",
+            "example": "Ukraine"
+          }
+        },
+        "required": [
+          "email",
+          "password",
+          "firstName",
+          "lastName",
+          "companyName",
+          "organizationType"
+        ]
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8,
+            "example": "password123"
+          }
+        },
+        "required": ["email", "password"]
+      },
+      "UpdateCompanyDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          },
+          "logoUrl": {
+            "type": "string"
+          },
+          "coverImageUrl": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "minBookingAdvanceMinutes": {
+            "type": "number"
+          }
+        }
+      },
+      "CreateServiceDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Haircut"
+          },
+          "description": {
+            "type": "string",
+            "example": "Classic men haircut"
+          },
+          "price": {
+            "type": "number",
+            "minimum": 0,
+            "example": 25.5
+          },
+          "durationMinutes": {
+            "type": "number",
+            "minimum": 5,
+            "example": 60
+          },
+          "category": {
+            "type": "string",
+            "example": "Hair"
+          }
+        },
+        "required": ["name", "price", "durationMinutes"]
+      },
+      "UpdateServiceDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Haircut"
+          },
+          "description": {
+            "type": "string",
+            "example": "Classic men haircut"
+          },
+          "price": {
+            "type": "number",
+            "minimum": 0,
+            "example": 25.5
+          },
+          "durationMinutes": {
+            "type": "number",
+            "minimum": 5,
+            "example": 60
+          },
+          "category": {
+            "type": "string",
+            "example": "Hair"
+          }
+        }
+      },
+      "InviteWorkerDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "worker@example.com"
+          },
+          "position": {
+            "type": "string",
+            "example": "Stylist"
+          }
+        },
+        "required": ["email"]
+      },
+      "AcceptWorkerInviteDto": {
+        "type": "object",
+        "properties": {
+          "inviteCode": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "example": "worker@example.com"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8,
+            "example": "password123"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Jane"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Smith"
+          },
+          "position": {
+            "type": "string",
+            "example": "Stylist"
+          },
+          "bio": {
+            "type": "string"
+          },
+          "experienceYears": {
+            "type": "number",
+            "minimum": 0,
+            "example": 3
+          }
+        },
+        "required": ["inviteCode", "email", "password", "firstName", "lastName"]
+      },
+      "CreateAvailabilityDto": {
+        "type": "object",
+        "properties": {
+          "workerProfileId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "dayOfWeek": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 6,
+            "example": 1,
+            "description": "0 = Sunday, 6 = Saturday"
+          },
+          "startTime": {
+            "type": "string",
+            "example": "09:00",
+            "description": "HH:mm format"
+          },
+          "endTime": {
+            "type": "string",
+            "example": "17:00",
+            "description": "HH:mm format"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "required": ["workerProfileId", "dayOfWeek", "startTime", "endTime"]
+      },
+      "CreateBookingDto": {
+        "type": "object",
+        "properties": {
+          "companyId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workerProfileId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "serviceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-06-01T10:00:00.000Z"
+          },
+          "endDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-06-01T11:00:00.000Z"
+          },
+          "clientNote": {
+            "type": "string"
+          },
+          "companyClientId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "clientFirstName": {
+            "type": "string"
+          },
+          "clientLastName": {
+            "type": "string"
+          },
+          "clientMiddleName": {
+            "type": "string"
+          },
+          "clientPhone": {
+            "type": "string"
+          },
+          "clientEmail": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "companyId",
+          "workerProfileId",
+          "serviceId",
+          "startDateTime"
+        ]
+      },
+      "BookingStatus": {
+        "type": "string",
+        "enum": [
+          "PENDING",
+          "CONFIRMED",
+          "DECLINED",
+          "CANCELED",
+          "COMPLETED",
+          "NO_SHOW"
+        ]
+      },
+      "UpdateBookingDto": {
+        "type": "object",
+        "properties": {
+          "companyClientId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workerProfileId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "serviceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-06-01T10:00:00.000Z"
+          },
+          "endDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-06-01T11:00:00.000Z"
+          },
+          "status": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BookingStatus"
+              }
+            ]
+          },
+          "clientNote": {
+            "type": "string"
+          },
+          "cancelReason": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateCompanyClientDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "middleName": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
